@@ -1,7 +1,31 @@
 class Scrabble
 
   def score(word)
-    1
+    return 0 if word.nil?
+    letter_multipliers = []
+    word.length.times do
+      letter_multipliers << 1
+    end
+    score_with_multipliers(word, letter_multipliers)
+  end
+
+  def score_with_multipliers(word, letter_multipliers, word_multiplier = 1)
+    score = []
+    # word.length.times do |index|
+    #   score << (point_values[word[index].upcase] * letter_multipliers[index])
+    # end
+    score = get_chars(word).map.with_index do |letter, index|
+      point_values[letter] * letter_multipliers[index]
+    end
+    score = score.sum
+    if word.length >= 7
+      score += 10
+    end
+    score * word_multiplier
+  end
+
+  def get_chars(word)
+    word.upcase.chars
   end
 
   def point_values
